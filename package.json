@@ -1,0 +1,40 @@
+{
+  "name": "supp-v2",
+  "version": "0.1.0",
+  "description": "Gmail support ticket system using shared inbox, Yjs CRDTs, and P2P sync",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "test:build": "webpack --config webpack.config.test.js",
+    "test:build:real": "webpack --config webpack.config.real.js",
+    "test:mock": "tsx tests/helpers/mock-server.ts",
+    "test:setup-profiles": "npx tsx scripts/setup-test-profiles.ts",
+    "test:reset": "npx tsx scripts/reset-test-state.ts",
+    "test:run": "playwright test",
+    "test": "npm run test:build && concurrently --kill-others-on-fail -n mock,tests \"npm run test:mock\" \"npm run test:run\""
+  },
+  "dependencies": {
+    "@inboxsdk/core": "^2.2.11",
+    "firebase": "^10.7.2",
+    "nanoid": "^5.0.4",
+    "y-indexeddb": "^9.0.12",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.10"
+  },
+  "devDependencies": {
+    "@mockoon/cli": "^9.5.0",
+    "@playwright/test": "^1.40.1",
+    "concurrently": "^8.2.2",
+    "copy-webpack-plugin": "^12.0.2",
+    "dotenv": "^16.3.1",
+    "tsx": "^4.7.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "PolyForm-Noncommercial-1.0.0"
+}

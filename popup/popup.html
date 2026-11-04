@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supp — Gmail Support Tickets</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: #202124;
+    }
+
+    .version {
+      font-size: 12px;
+      color: #5f6368;
+      margin-bottom: 16px;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .status.initializing {
+      background-color: #fef7e0;
+      color: #7c4a00;
+    }
+
+    .status.connected {
+      background-color: #e6f4ea;
+      color: #137333;
+    }
+
+    .status.error {
+      background-color: #fce8e6;
+      color: #c5221f;
+    }
+
+    .stats {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .stats-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
+    }
+
+    .stats-label {
+      font-weight: 500;
+    }
+
+    .stats-value {
+      color: #202124;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>Supp</h1>
+  <div class="version">Version <span id="version">0.1.0</span></div>
+
+  <div id="status" class="status initializing">
+    Initializing…
+  </div>
+
+  <div id="stats" class="stats" style="display: none;">
+    <div class="stats-item">
+      <span class="stats-label">Tickets:</span>
+      <span class="stats-value" id="ticket-count">—</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-label">Agents:</span>
+      <span class="stats-value" id="agent-count">—</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-label">Leader:</span>
+      <span class="stats-value" id="leader-status">—</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

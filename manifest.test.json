@@ -1,0 +1,56 @@
+{
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsONBJ2tOc4RwZq6JgymS2NSZ52QE6gde/fVL3nnxfeI/LDgUE2wof50CGf6u/wpWb7QckgX4CTj6NlA6LnIst0DQyqu0t+K8hjghnkeSxZrtV2orc0P3o/lfrEhzwf35ECZXg8bJcnOjs9NWBOukytz5nK66Kr0yFlrmtgNuyCg2IlzgyTH/jlGTR6YR5tdhe9ISoSfRakTuI71bXmrOF/Ptd4K+6cAa5wxiQ9jKozHEGP4PToxyawXYCKmzMI/T7lB74Gri4ZocHJjLozvc9SjkN5He7WjYpjd9WkRNbtEe5P5QtdW57cU+Wy7BYBGBYNyi7BsHKveX9ojCkewTMQIDAQAB",
+  "name": "Supp — Gmail Support Tickets (TEST)",
+  "version": "0.1.0",
+  "description": "Test build — content script also runs on localhost:4001 (Mockoon)",
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "alarms",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://gmail.googleapis.com/*",
+    "https://www.googleapis.com/*",
+    "http://localhost:4001/*"
+  ],
+  "oauth2": {
+    "client_id": "160155536458-tgvt5miooe80o9nvogvc10vkofv70d4p.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.modify"
+    ]
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "http://localhost:4001/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["pageWorld.js", "icons/icon-16.png", "icons/icon-48.png", "icons/icon-128.png"],
+      "matches": ["https://mail.google.com/*", "http://localhost:4001/*"]
+    }
+  ]
+}

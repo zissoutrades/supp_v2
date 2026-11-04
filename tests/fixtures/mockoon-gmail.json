@@ -1,0 +1,185 @@
+{
+  "uuid": "supp-v2-gmail-mock",
+  "name": "Gmail API Mock for Supp v2",
+  "port": 4001,
+  "hostname": "localhost",
+  "tlsOptions": { "enabled": false },
+  "routes": [
+    {
+      "uuid": "profile",
+      "documentation": "User profile",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/profile",
+      "responses": [
+        {
+          "uuid": "profile-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"emailAddress\": \"test@example.com\", \"messagesTotal\": 0, \"threadsTotal\": 0, \"historyId\": \"1000\"}"
+        }
+      ]
+    },
+    {
+      "uuid": "history-list",
+      "documentation": "Gmail History API — returns from data bucket so tests can inject entries",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/history",
+      "responses": [
+        {
+          "uuid": "history-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{{data 'history'}}"
+        }
+      ]
+    },
+    {
+      "uuid": "messages-list",
+      "documentation": "List messages in inbox — returns from data bucket",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/messages",
+      "responses": [
+        {
+          "uuid": "messages-list-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{{data 'inbox'}}"
+        }
+      ]
+    },
+    {
+      "uuid": "messages-send",
+      "documentation": "Send a reply",
+      "method": "post",
+      "endpoint": "gmail/v1/users/me/messages/send",
+      "responses": [
+        {
+          "uuid": "messages-send-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"id\": \"msg-{{faker 'string.alphanumeric' 16}}\", \"threadId\": \"thread-001\", \"labelIds\": [\"SENT\"]}"
+        }
+      ]
+    },
+    {
+      "uuid": "message-get",
+      "documentation": "Get single message by ID — returns from messages data bucket",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/messages/:id",
+      "responses": [
+        {
+          "uuid": "message-get-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{{data 'messages' (urlParam 'id')}}"
+        }
+      ]
+    },
+    {
+      "uuid": "messages-modify",
+      "documentation": "Add or remove labels from a message",
+      "method": "post",
+      "endpoint": "gmail/v1/users/me/messages/:id/modify",
+      "responses": [
+        {
+          "uuid": "messages-modify-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"id\": \"{{urlParam 'id'}}\", \"labelIds\": [\"INBOX\"]}"
+        }
+      ]
+    },
+    {
+      "uuid": "thread-get",
+      "documentation": "Get thread by ID — returns from threads data bucket",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/threads/:id",
+      "responses": [
+        {
+          "uuid": "thread-get-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{{data 'threads' (urlParam 'id')}}"
+        }
+      ]
+    },
+    {
+      "uuid": "thread-modify",
+      "documentation": "Add or remove labels from a thread",
+      "method": "post",
+      "endpoint": "gmail/v1/users/me/threads/:id/modify",
+      "responses": [
+        {
+          "uuid": "thread-modify-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"id\": \"{{urlParam 'id'}}\", \"labelIds\": [\"Label_Supp\"]}"
+        }
+      ]
+    },
+    {
+      "uuid": "messages-insert",
+      "documentation": "Insert shadow email (multipart upload)",
+      "method": "post",
+      "endpoint": "upload/gmail/v1/users/me/messages",
+      "responses": [
+        {
+          "uuid": "messages-insert-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"id\": \"msg-{{faker 'string.alphanumeric' 16}}\", \"threadId\": \"thd-{{faker 'string.alphanumeric' 16}}\", \"labelIds\": [\"INBOX\", \"UNREAD\", \"Label_Supp\"]}"
+        }
+      ]
+    },
+    {
+      "uuid": "labels-list",
+      "documentation": "List labels — includes pre-existing Supp label",
+      "method": "get",
+      "endpoint": "gmail/v1/users/me/labels",
+      "responses": [
+        {
+          "uuid": "labels-list-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"labels\": [{\"id\": \"INBOX\", \"name\": \"INBOX\"}, {\"id\": \"SENT\", \"name\": \"SENT\"}, {\"id\": \"UNREAD\", \"name\": \"UNREAD\"}, {\"id\": \"Label_Supp\", \"name\": \"Supp\"}]}"
+        }
+      ]
+    },
+    {
+      "uuid": "labels-create",
+      "documentation": "Create a new label",
+      "method": "post",
+      "endpoint": "gmail/v1/users/me/labels",
+      "responses": [
+        {
+          "uuid": "labels-create-resp",
+          "statusCode": 200,
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\"id\": \"Label_{{faker 'string.alphanumeric' 8}}\", \"name\": \"Supp\", \"type\": \"user\"}"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "uuid": "history-data",
+      "name": "history",
+      "value": "{\"history\": [], \"historyId\": \"1001\"}"
+    },
+    {
+      "uuid": "inbox-data",
+      "name": "inbox",
+      "value": "{\"messages\": [], \"resultSizeEstimate\": 0}"
+    },
+    {
+      "uuid": "messages-data",
+      "name": "messages",
+      "value": "{}"
+    },
+    {
+      "uuid": "threads-data",
+      "name": "threads",
+      "value": "{}"
+    }
+  ]
+}

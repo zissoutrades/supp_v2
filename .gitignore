@@ -1,0 +1,56 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.output
+stats.html
+stats-*.json
+.wxt
+web-ext.config.ts
+*.zip
+empty.json
+
+# Build output
+dist/
+dist-test/
+
+# Extension signing key (private — never commit)
+*.pem
+
+# Test artifacts
+test-results/
+playwright-report/
+.env.test
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Firebase Admin SDK service account key (private — never commit)
+supp-db-test-firebase-adminsdk-fbsvc-43c88a5402.json
+
+# Agent scaffolding
+.claude/
+
+# Test browser profiles
+tests/chrome-profiles/
+
+# Internal notes (kept locally, never published)
+CLAUDE.md
+TESTING-LEADER.md
+TESTING-ONBOARDING.md
+TESTING-P2P.md
+supp_v2_bugs.md
